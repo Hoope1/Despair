@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: MIT
+
 import numpy as np
 
 from processing.image_utils import load_image, save_edge_map

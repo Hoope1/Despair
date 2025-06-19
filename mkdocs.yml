@@ -1,0 +1,5 @@
+site_name: Edge Detection App
+docs_dir: docs
+site_dir: site
+nav:
+  - Home: index.md

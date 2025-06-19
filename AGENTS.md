@@ -45,10 +45,16 @@ This **Agents.md** file equips OpenAI Codex (and compatible AI tools) with the 
 | `/processing/`     | Non‑GUI business logic.<br>`batch_processor.py` (QThread that orchestrates inference) and `image_utils.py` I/O helpers.                                            |
 | `/checkpoints/`    | Downloaded model weights (ignored by VCS; `.gitkeep` only).                                                                                                        |
 | `/output/`         | Generated edge maps organised per‑model (also `.gitkeep`).                                                                                                         |
-| `/tests/`          | **(to be created)** pytest suite: unit, integration, GUI (`pytest‑qt`).                                                                                            |
-| `requirements.txt` | Runtime dependency lockfile.                                                                                                                                       |
-| `README.md`        | End‑user instructions.                                                                                                                                             |
-| `AGENTS.md`        | **← this file**.                                                                                                                                                   |
+| `/tests/`          | pytest suite: unit, integration, GUI (`pytest-qt`).|
+| `/docs/`           | MkDocs documentation sources.|
+| `Dockerfile`       | Container definition for production image.|
+| `docker-compose.yml` | Development container orchestration.|
+| `requirements.txt` | Runtime dependency lockfile.|
+| `requirements-dev.txt` | Developer tools for linting and tests.|
+| `README.md`        | End-user instructions.|
+| `AGENTS.md`        | **← this file**.|
+| `.pre-commit-config.yaml` | Pre-commit hooks configuration.|
+| `.github/workflows/ci.yml` | Continuous integration pipeline.|
 
 ---
 

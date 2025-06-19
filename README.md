@@ -1,4 +1,4 @@
-# AGENTS.md – Edge Detection App
+# AGENTS.md – Edge Detection App ![CI](https://github.com/example/repo/workflows/CI/badge.svg)
 
 This **Agents.md** file provides OpenAI Codex (and similar AI tools) with a concise yet comprehensive guide to navigating and contributing to the **Modern Edge Detection App**. It codifies the project’s layout, conventions, testing strategy, pull‑request workflow, and local quality checks so that AI‑generated code integrates smoothly with the existing codebase.
 
@@ -224,6 +224,13 @@ pip install -r requirements.txt
 
 ```bash
 python main.py
+```
+
+### Docker
+
+```bash
+docker build -t edge-app .
+docker run --rm edge-app smoke.py
 ```
 
 1. Click "Select Folder" to choose input directory

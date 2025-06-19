@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: MIT
+
 from pathlib import Path
 
 import cv2
@@ -137,7 +139,9 @@ class DexiNedModel(BaseEdgeDetector):
 
         return edge_map
 
-    def _non_max_suppression(self, edge_map: np.ndarray, threshold: float = 0.1) -> np.ndarray:
+    def _non_max_suppression(
+        self, edge_map: np.ndarray, threshold: float = 0.1
+    ) -> np.ndarray:
         """Apply non-maximum suppression for thinner edges"""
         # Simple NMS implementation
         h, w = edge_map.shape

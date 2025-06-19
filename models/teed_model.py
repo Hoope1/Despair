@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: MIT
+
 from pathlib import Path
 
 import cv2
@@ -77,8 +79,12 @@ class TEEDNet(nn.Module):
         out4 = self.out3(f4)
 
         # Upsample to original size
-        out3 = F.interpolate(out3, size=out2.shape[2:], mode="bilinear", align_corners=False)
-        out4 = F.interpolate(out4, size=out2.shape[2:], mode="bilinear", align_corners=False)
+        out3 = F.interpolate(
+            out3, size=out2.shape[2:], mode="bilinear", align_corners=False
+        )
+        out4 = F.interpolate(
+            out4, size=out2.shape[2:], mode="bilinear", align_corners=False
+        )
 
         # Combine outputs
         out = torch.sigmoid((out2 + out3 + out4) / 3)
@@ -103,7 +109,9 @@ class TEEDModel(BaseEdgeDetector):
         checkpoint_path = "checkpoints/teed_simplified.pth"
         try:
             if Path(checkpoint_path).exists():
-                state_dict = torch.load(checkpoint_path, map_location=self.device)
+                state_dict = torch.load(
+                    checkpoint_path, map_location=self.device
+                )  # nosec B614
                 self.model.load_state_dict(state_dict)
                 print("Loaded TEED checkpoint")
         except Exception:

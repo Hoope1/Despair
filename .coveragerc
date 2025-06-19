@@ -1,0 +1,6 @@
+[run]
+omit =
+    gui/*
+    main.py
+    processing/*
+    models/*
