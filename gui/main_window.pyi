@@ -2,7 +2,7 @@ from PyQt6.QtWidgets import QMainWindow
 
 from processing.batch_processor import BatchProcessor
 
-class EdgeDetectionApp(QMainWindow):  # type: ignore[misc]
+class EdgeDetectionApp(QMainWindow):
     processor_thread: BatchProcessor | None
 
     def __init__(self) -> None: ...

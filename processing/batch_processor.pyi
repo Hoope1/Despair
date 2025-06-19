@@ -2,7 +2,7 @@ from typing import Dict
 
 from PyQt6.QtCore import QThread, pyqtSignal
 
-class BatchProcessor(QThread):  # type: ignore[misc]
+class BatchProcessor(QThread):
     progress_update: pyqtSignal
     log_message: pyqtSignal
     processing_complete: pyqtSignal
