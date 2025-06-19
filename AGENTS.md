@@ -96,5 +96,14 @@ This **Agents.md** file equips OpenAI Codex (and compatible AI tools) with the 
 ### How to use this repository
 
 1. Create a virtual environment and install requirements with `pip install -r requirements.txt`.
-2. Run the application using `python -m main`.
-3. Execute `flake8` and `pytest -q` to validate before committing changes.
+2. Download model weights via `python scripts/download_weights.py`.
+3. Run the application using `python -m main`.
+4. Execute `flake8` and `pytest -q` to validate before committing changes.
+
+### Pretrained weights
+
+| Model | File | Source URL |
+|-------|------|------------|
+| TEED | `checkpoints/teed_simplified.pth` | https://drive.google.com/uc?id=1V56vGTsu7GYiQouCIKvTWl5UKCZ6yCNu |
+| TEED-Alt | `checkpoints/teed_checkpoint.pth` | https://drive.google.com/uc?id=1V56vGTsu7GYiQouCIKvTWl5UKCZ6yCNu |
+| DexiNed | `checkpoints/dexined_checkpoint.pth` | https://drive.google.com/uc?id=1u3zrP5TQp3XkQ41RUOEZutnDZ9SdpyRk |
