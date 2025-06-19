@@ -221,6 +221,7 @@ source venv/bin/activate
 3. Install requirements:
 ```bash
 pip install -r requirements.txt
+python scripts/download_weights.py
 ```
 
 ## Usage
@@ -268,7 +269,7 @@ output/
 All checkpoints are downloaded automatically on first run. To fetch them manually run:
 
 ```bash
-python scripts/download_checkpoints.py
+python scripts/download_weights.py
 ```
 
 Direct `gdown` commands:
@@ -1109,6 +1110,7 @@ Install dependencies and launch the application:
 ```bash
 python -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
+python scripts/download_weights.py
 python -m main
 ```
 
