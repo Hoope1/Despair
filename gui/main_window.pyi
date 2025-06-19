@@ -1,3 +1,5 @@
+# SPDX-FileCopyrightText: 2025 The Despair Authors
+# SPDX-License-Identifier: MIT
 from PyQt6.QtWidgets import QMainWindow
 
 from processing.batch_processor import BatchProcessor

@@ -1,3 +1,5 @@
+<!-- SPDX-FileCopyrightText: 2024 The Despair Authors -->
+<!-- SPDX-License-Identifier: MIT -->
 ## Task
 Lese die Dateien `README.md` und `AGENTS.md` im Repository-Stammverzeichnis. Erstelle daraus ein vollständig lauffähiges Projekt:
 

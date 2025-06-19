@@ -1,0 +1,14 @@
+# SPDX-FileCopyrightText: 2025 The Despair Authors
+# SPDX-License-Identifier: MIT
+black
+isort
+flake8
+mypy
+bandit
+detect-secrets
+pre-commit
+pytest
+pip-audit
+reuse
+mkdocs
+codespell

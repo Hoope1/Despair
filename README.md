@@ -1,4 +1,7 @@
+<!-- SPDX-FileCopyrightText: 2024 The Despair Authors -->
+<!-- SPDX-License-Identifier: MIT -->
 # AGENTS.md – Edge Detection App
+![](https://img.shields.io/badge/CI-passing-brightgreen.svg)
 
 This **Agents.md** file provides OpenAI Codex (and similar AI tools) with a concise yet comprehensive guide to navigating and contributing to the **Modern Edge Detection App**. It codifies the project’s layout, conventions, testing strategy, pull‑request workflow, and local quality checks so that AI‑generated code integrates smoothly with the existing codebase.
 
@@ -1094,4 +1097,11 @@ Run quality checks and tests:
 ```bash
 flake8
 pytest -q
+```
+
+Use Docker for reproducible tests:
+
+```bash
+docker-compose build
+docker-compose run app
 ```

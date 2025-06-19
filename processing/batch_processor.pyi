@@ -1,3 +1,5 @@
+# SPDX-FileCopyrightText: 2025 The Despair Authors
+# SPDX-License-Identifier: MIT
 from typing import Dict
 
 from PyQt6.QtCore import QThread, pyqtSignal
