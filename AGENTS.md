@@ -49,6 +49,7 @@ This **Agents.md** file equips OpenAI Codex (and compatible AI tools) with the 
 | `/output/`         | Generated edge maps organised per‑model (also `.gitkeep`).                                                                                                         |
 | `/tests/`          | **(to be created)** pytest suite: unit, integration, GUI (`pytest‑qt`).                                                                                            |
 | `requirements.txt` | Runtime dependency lockfile.                                                                                                                                       |
+| `/scripts/`        | Utility helpers like `download_checkpoints.py`. |
 | `README.md`        | End‑user instructions.                                                                                                                                             |
 | `AGENTS.md`        | **← this file**.                                                                                                                                                   |
 
