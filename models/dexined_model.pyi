@@ -1,3 +1,5 @@
+# SPDX-FileCopyrightText: 2025 The Despair Authors
+# SPDX-License-Identifier: MIT
 from typing import Any, Optional
 
 import numpy as np

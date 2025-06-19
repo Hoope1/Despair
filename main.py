@@ -1,3 +1,5 @@
+# SPDX-FileCopyrightText: 2025 The Despair Authors
+# SPDX-License-Identifier: MIT
 import sys
 from pathlib import Path
 

@@ -1,0 +1,9 @@
+# SPDX-FileCopyrightText: 2025 The Despair Authors
+# SPDX-License-Identifier: MIT
+version: '3.8'
+services:
+  app:
+    build: .
+    volumes:
+      - .:/app
+    command: bash -c "pre-commit run --all-files && pytest -q && python smoke.py"
