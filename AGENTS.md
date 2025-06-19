@@ -89,3 +89,9 @@ This **Agents.md** file equips OpenAI Codex (and compatible AI tools) with the 
 * **Automated link audit:** A CI job (e.g., `scripts/verify_resources.py`) must run on every PR to ensure all URLs respond with HTTP 200 and that downloaded files match the documented hash.
 
 ## 3  Testing Requirements
+
+### How to use this repository
+
+1. Create a virtual environment and install requirements with `pip install -r requirements.txt`.
+2. Run the application using `python -m main`.
+3. Execute `flake8` and `pytest -q` to validate before committing changes.

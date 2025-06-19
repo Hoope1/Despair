@@ -1078,3 +1078,20 @@ def save_edge_map(edge_map, output_path, original_size=None):
 === FILE: output/.gitkeep ===
 
 # This directory stores processed edge detection results
+
+## Quick Start
+
+Install dependencies and launch the application:
+
+```bash
+python -m venv venv && source venv/bin/activate
+pip install -r requirements.txt
+python -m main
+```
+
+Run quality checks and tests:
+
+```bash
+flake8
+pytest -q
+```
