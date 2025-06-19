@@ -30,7 +30,9 @@ def save_edge_map(edge_map, output_path, original_size=None):
 
         # Resize back to original size if needed
         if original_size and (edge_map.shape[1], edge_map.shape[0]) != original_size:
-            edge_map = cv2.resize(edge_map, original_size, interpolation=cv2.INTER_LINEAR)
+            edge_map = cv2.resize(
+                edge_map, original_size, interpolation=cv2.INTER_LINEAR
+            )
 
         # Ensure proper format
         if edge_map.dtype != np.uint8:

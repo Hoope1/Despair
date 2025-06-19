@@ -52,24 +52,34 @@ class BatchProcessor(QThread):
                     self.log_message.emit(f"Failed to load: {filename}")
                     continue
 
-                self.log_message.emit(f"Processing: {filename} ({image.shape[1]}x{image.shape[0]})")
+                self.log_message.emit(
+                    f"Processing: {filename} ({image.shape[1]}x{image.shape[0]})"
+                )
 
                 # Process with each model
                 for model_name, model in self.models.items():
                     try:
                         # Process image (handles large images automatically)
                         if max(image.shape[:2]) > 2048:
-                            self.log_message.emit(f"  Using tiled processing for {model_name}")
-                            edge_map = model.process_large_image(image, tile_size=1536, overlap=256)
+                            self.log_message.emit(
+                                f"  Using tiled processing for {model_name}"
+                            )
+                            edge_map = model.process_large_image(
+                                image, tile_size=1536, overlap=256
+                            )
                         else:
                             edge_map = model.process_image(image)
 
                         # Save result
                         output_path = (
-                            Path("output") / model_name / f"{Path(filename).stem}_edges.png"
+                            Path("output")
+                            / model_name
+                            / f"{Path(filename).stem}_edges.png"
                         )
                         save_edge_map(
-                            edge_map, output_path, original_size=(image.shape[1], image.shape[0])
+                            edge_map,
+                            output_path,
+                            original_size=(image.shape[1], image.shape[0]),
                         )
 
                     except Exception as e:

@@ -37,7 +37,9 @@ class EdgeDetectionApp(QMainWindow):
         folder_layout = QHBoxLayout()
 
         self.folder_label = QLabel("No folder selected")
-        self.folder_label.setStyleSheet("QLabel { background-color: #f0f0f0; padding: 5px; }")
+        self.folder_label.setStyleSheet(
+            "QLabel { background-color: #f0f0f0; padding: 5px; }"
+        )
         folder_layout.addWidget(self.folder_label)
 
         self.select_button = QPushButton("Select Folder")
@@ -86,7 +88,9 @@ class EdgeDetectionApp(QMainWindow):
         # Status bar
         self.status_label = QLabel("Ready to process images")
         self.status_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.status_label.setStyleSheet("QLabel { background-color: #e0e0e0; padding: 5px; }")
+        self.status_label.setStyleSheet(
+            "QLabel { background-color: #e0e0e0; padding: 5px; }"
+        )
         layout.addWidget(self.status_label)
 
     def select_folder(self):
