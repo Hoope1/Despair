@@ -12,10 +12,9 @@ class ModelManager:
         self.cache_dir = Path(cache_dir)
         self.cache_dir.mkdir(exist_ok=True)
 
-    def download_dexined_weights(self):
-        """Download DexiNed pretrained weights from Google Drive"""
-        # DexiNed weights URL from the GitHub page
-        url = "https://drive.google.com/uc?id=1V56vGTsu7GYiQouCIKvTWl5UKCZ6yCNu"
+    def download_dexined_weights(self) -> str | None:
+        """Download DexiNed pretrained weights from Google Drive."""
+        url = "https://drive.google.com/uc?id=1u3zrP5TQp3XkQ41RUOEZutnDZ9SdpyRk"
         output_path = self.cache_dir / "dexined_checkpoint.pth"
 
         if output_path.exists():
@@ -32,16 +31,20 @@ class ModelManager:
             print("Using simplified model instead")
             return None
 
-    def download_teed_weights(self):
-        """Download TEED weights if available"""
-        # TEED doesn't provide direct download links in the repository
-        # Would need to train or request from authors
-        output_path = self.cache_dir / "teed_checkpoint.pth"
+    def download_teed_weights(self) -> str | None:
+        """Download TEED weights from Google Drive."""
+        url = "https://drive.google.com/uc?id=1V56vGTsu7GYiQouCIKvTWl5UKCZ6yCNu"
+        output_path = self.cache_dir / "teed_simplified.pth"
 
         if output_path.exists():
-            print("TEED weights already available")
+            print("TEED weights already downloaded")
             return str(output_path)
 
-        print("TEED pretrained weights not available for direct download")
-        print("Using randomly initialized weights (demo mode)")
-        return None
+        try:
+            print("Downloading TEED weights...")
+            gdown.download(url, str(output_path), quiet=False)
+            print("TEED weights downloaded successfully")
+            return str(output_path)
+        except Exception as e:
+            print(f"Failed to download TEED weights: {e}")
+            return None

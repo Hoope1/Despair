@@ -263,6 +263,26 @@ output/
 - Produces clean, thin edges
 - Slower but higher quality
 
+### Pretrained Model Weights
+
+All checkpoints are downloaded automatically on first run. To fetch them manually run:
+
+```bash
+python scripts/download_checkpoints.py
+```
+
+Direct `gdown` commands:
+
+| Model    | Target path                               | Command                                                                                                             |
+|--------- |-------------------------------------------|---------------------------------------------------------------------------------------------------------------------|
+| TEED     | `checkpoints/teed_simplified.pth`         | `gdown 'https://drive.google.com/uc?id=1V56vGTsu7GYiQouCIKvTWl5UKCZ6yCNu' -O checkpoints/teed_simplified.pth`     |
+| TEED-Alt | `checkpoints/teed_checkpoint.pth`         | `gdown 'https://drive.google.com/uc?id=1V56vGTsu7GYiQouCIKvTWl5UKCZ6yCNu' -O checkpoints/teed_checkpoint.pth`     |
+| DexiNed  | `checkpoints/dexined_checkpoint.pth`      | `gdown 'https://drive.google.com/uc?id=1u3zrP5TQp3XkQ41RUOEZutnDZ9SdpyRk' -O checkpoints/dexined_checkpoint.pth` |
+
+If a link fails check the official repositories:
+- TEED: https://github.com/xavysp/TEED
+- DexiNed: https://github.com/xavysp/DexiNed
+
 ## Troubleshooting
 
 ### CUDA Out of Memory
