@@ -1,0 +1,12 @@
+[behavior]
+use-uv = true
+global-python = false
+
+[proxy]
+# Proxy settings if needed
+# http = "http://proxy.example.com:8080"
+# https = "https://proxy.example.com:8080"
+
+[sources]
+default = { url = "https://pypi.org/simple/" }
+pytorch = { url = "https://download.pytorch.org/whl/cu118" }
