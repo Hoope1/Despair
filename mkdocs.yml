@@ -1,9 +1,8 @@
 # SPDX-FileCopyrightText: 2025 The Despair Authors
 # SPDX-License-Identifier: MIT
-# SPDX-FileCopyrightText: 2025 The Despair Authors
-# SPDX-License-Identifier: MIT
-site_name: Despair Edge Detection
+site_name: Despair
 docs_dir: docs
 site_dir: site
 nav:
   - Home: index.md
+  - API: api.md
