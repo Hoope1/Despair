@@ -1,23 +1,9 @@
-# SPDX-FileCopyrightText: 2025 The Despair Authors
-# SPDX-License-Identifier: MIT
-
-# Core dependencies
+# Runtime dependencies
 torch==2.1.0
 torchvision==0.16.0
 opencv-python==4.8.1.78
 numpy==1.24.3
+pandas==1.5.3
 Pillow==10.1.0
-matplotlib==3.7.2
-h5py==3.10.0
-scipy==1.11.4
-kornia==0.7.0
-tqdm==4.66.1
-
-# GUI - with specific versions for Windows compatibility
-PyQt6-sip==13.6.0
-PyQt6-Qt6==6.6.0
 PyQt6==6.6.0
-
-# Utils
 gdown==4.7.1
-requests==2.31.0

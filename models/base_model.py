@@ -32,28 +32,26 @@ class BaseEdgeDetector(ABC):
         self, image: np.ndarray, tile_size: int = 1024, overlap: int = 128
     ) -> np.ndarray:
         """Process large images using tiling to avoid OOM"""
+        if tile_size <= overlap:
+            raise ValueError("tile_size must be larger than overlap")
         h, w = image.shape[:2]
 
         # If image is small enough, process directly
         if h <= tile_size and w <= tile_size:
             return self.process_image(image)
 
-        # Calculate tile parameters
         stride = tile_size - overlap
-        h_tiles = (h - overlap) // stride + 1
-        w_tiles = (w - overlap) // stride + 1
 
         # Initialize output
         output = np.zeros((h, w), dtype=np.float32)
         weight_map = np.zeros((h, w), dtype=np.float32)
 
         # Process each tile
-        for i in range(h_tiles):
-            for j in range(w_tiles):
-                # Calculate tile boundaries
-                y_start = i * stride
-                x_start = j * stride
-                y_end = min(y_start + tile_size, h)
+        y_start = 0
+        while y_start < h:
+            x_start = 0
+            y_end = min(y_start + tile_size, h)
+            while x_start < w:
                 x_end = min(x_start + tile_size, w)
 
                 # Extract and process tile
@@ -63,8 +61,9 @@ class BaseEdgeDetector(ABC):
                 # Add to output with blending
                 output[y_start:y_end, x_start:x_end] += tile_output
                 weight_map[y_start:y_end, x_start:x_end] += 1
+                x_start += stride
+            y_start += stride
 
-        # Normalize by weight map
         output = output / np.maximum(weight_map, 1)
 
         return output

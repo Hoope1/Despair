@@ -1,5 +1,6 @@
 # SPDX-FileCopyrightText: 2025 The Despair Authors
 # SPDX-License-Identifier: MIT
+import logging
 from pathlib import Path
 
 import cv2
@@ -113,9 +114,9 @@ class TEEDModel(BaseEdgeDetector):
                     checkpoint_path, map_location=self.device
                 )  # nosec B614
                 self.model.load_state_dict(state_dict)
-                print("Loaded TEED checkpoint")
+                logging.info("Loaded TEED checkpoint")
         except Exception:
-            print("Using random initialized TEED (demo mode)")
+            logging.info("Using random initialized TEED (demo mode)")
 
     def preprocess(self, image: np.ndarray) -> torch.Tensor:
         """Preprocess image for TEED"""

@@ -1110,6 +1110,7 @@ Install dependencies and launch the application:
 ```bash
 python -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
+pip install -r requirements-dev.txt
 python scripts/download_weights.py
 python -m main
 ```
@@ -1117,6 +1118,7 @@ python -m main
 Run quality checks and tests:
 
 ```bash
+isort .
 flake8
 pytest -q
 ```

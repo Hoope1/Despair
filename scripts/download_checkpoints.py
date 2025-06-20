@@ -4,6 +4,7 @@
 
 from __future__ import annotations
 
+import logging
 from pathlib import Path
 
 import gdown
@@ -33,9 +34,9 @@ def download_all() -> None:
 
     for model in MODELS:
         if model["out"].exists():
-            print(f"{model['out']} already exists – skipping.")
+            logging.info("%s already exists – skipping.", model["out"])
             continue
-        print(f"Downloading {model['name']} ...")
+        logging.info("Downloading %s ...", model["name"])
         gdown.download(model["url"], str(model["out"]), quiet=False)
 
 

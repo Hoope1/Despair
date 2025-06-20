@@ -1,5 +1,6 @@
 # SPDX-FileCopyrightText: 2025 The Despair Authors
 # SPDX-License-Identifier: MIT
+import logging
 from pathlib import Path
 
 import cv2
@@ -13,13 +14,13 @@ def load_image(image_path):
         image = cv2.imread(str(image_path), cv2.IMREAD_UNCHANGED)
 
         if image is None:
-            print(f"Failed to load image: {image_path}")
+            logging.error("Failed to load image: %s", image_path)
             return None
 
         return image
 
     except Exception as e:
-        print(f"Error loading image {image_path}: {e}")
+        logging.error("Error loading image %s: %s", image_path, e)
         return None
 
 
@@ -37,11 +38,11 @@ def save_edge_map(edge_map, output_path, original_size=None):
             )
 
         # Ensure proper format
-        if edge_map.dtype != np.uint8:
-            edge_map = np.clip(edge_map * 255, 0, 255).astype(np.uint8)
+        if edge_map.dtype != np.uint8 and edge_map.max() <= 1.0:
+            edge_map = (edge_map * 255).astype(np.uint8)
 
         # Save image
         cv2.imwrite(str(output_path), edge_map)
 
     except Exception as e:
-        print(f"Error saving edge map: {e}")
+        logging.error("Error saving edge map: %s", e)
