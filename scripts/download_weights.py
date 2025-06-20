@@ -4,27 +4,18 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import logging
 from pathlib import Path
 from typing import Dict
 
 import gdown
 
+from config import DEXINED_URL, TEED_ALT_URL, TEED_URL
+
 CHECKPOINTS: Dict[str, Dict[str, str]] = {
-    "teed": {
-        "url": "https://drive.google.com/uc?id=1V56vGTsu7GYiQouCIKvTWl5UKCZ6yCNu",
-        "file": "teed_simplified.pth",
-        "sha256": "",
-    },
-    "dexined": {
-        "url": "https://drive.google.com/uc?id=1u3zrP5TQp3XkQ41RUOEZutnDZ9SdpyRk",
-        "file": "dexined_checkpoint.pth",
-        "sha256": "",
-    },
-    "teed_alt": {
-        "url": "https://drive.google.com/uc?id=1V56vGTsu7GYiQouCIKvTWl5UKCZ6yCNu",
-        "file": "teed_checkpoint.pth",
-        "sha256": "",
-    },
+    "teed": {"url": TEED_URL, "file": "teed_simplified.pth", "sha256": ""},
+    "dexined": {"url": DEXINED_URL, "file": "dexined_checkpoint.pth", "sha256": ""},
+    "teed_alt": {"url": TEED_ALT_URL, "file": "teed_checkpoint.pth", "sha256": ""},
 }
 
 
@@ -44,7 +35,7 @@ def verify(path: Path, expected: str) -> bool:
     if expected:
         digest = sha256sum(path)
         if digest != expected:
-            print(f"Checksum mismatch for {path.name}: {digest} != {expected}")
+            logging.warning("Checksum mismatch for %s: %s != %s", path.name, digest, expected)
             return False
     return True
 
@@ -55,7 +46,7 @@ def download(url: str, out: Path) -> bool:
         gdown.download(url, str(out), quiet=False)
         return True
     except Exception as exc:  # pragma: no cover - network
-        print(f"Failed to download {url}: {exc}")
+        logging.error("Failed to download %s: %s", url, exc)
         return False
 
 
@@ -66,19 +57,19 @@ def ensure_weights(directory: Path, check_only: bool = False) -> None:
         target = directory / info["file"]
         if check_only:
             if verify(target, info.get("sha256", "")):
-                print(f"✓ {target.name} present")
+                logging.info("%s present", target.name)
             else:
-                print(f"Missing {target.name}")
+                logging.info("Missing %s", target.name)
         else:
             if verify(target, info.get("sha256", "")):
-                print(f"✓ {target.name} already up to date")
+                logging.info("%s already up to date", target.name)
                 continue
-            print(f"Downloading {name} weights ...")
+            logging.info("Downloading %s weights ...", name)
             if download(info["url"], target):
                 if verify(target, info.get("sha256", "")):
-                    print(f"✓ {target.name} downloaded")
+                    logging.info("%s downloaded", target.name)
                 else:
-                    print(f"Warning: checksum for {target.name} could not be verified")
+                    logging.warning("Checksum for %s could not be verified", target.name)
 
 
 def parse_args() -> argparse.Namespace:
@@ -100,6 +91,7 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     """Entry point."""
+    logging.basicConfig(level=logging.INFO, format="%(message)s")
     args = parse_args()
     ensure_weights(Path(args.target), check_only=args.check)
 

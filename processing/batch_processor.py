@@ -92,6 +92,7 @@ class BatchProcessor(QThread):
                     progress = int((current_step / total_steps) * 100)
                     self.progress_update.emit(progress)
 
+            self.progress_update.emit(100)
             self.processing_complete.emit()
 
         except Exception as e:
@@ -133,7 +134,7 @@ class BatchProcessor(QThread):
         supported_formats = {".jpg", ".jpeg", ".png", ".bmp", ".tiff", ".tif"}
         image_files = []
 
-        for file in Path(self.folder_path).iterdir():
+        for file in Path(self.folder_path).rglob("*"):
             if file.suffix.lower() in supported_formats:
                 image_files.append(str(file))
 

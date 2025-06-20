@@ -1,5 +1,6 @@
 # SPDX-FileCopyrightText: 2025 The Despair Authors
 # SPDX-License-Identifier: MIT
+import logging
 from pathlib import Path
 
 import cv2
@@ -17,15 +18,17 @@ class DexiBlock(nn.Module):
     def __init__(self, in_channels, out_channels):
         super(DexiBlock, self).__init__()
         self.conv1 = nn.Conv2d(in_channels, out_channels, 3, padding=1)
+        self.bn1 = nn.BatchNorm2d(out_channels)
         self.conv2 = nn.Conv2d(out_channels, out_channels, 3, padding=1)
+        self.bn2 = nn.BatchNorm2d(out_channels)
         self.conv3 = nn.Conv2d(out_channels, out_channels, 3, padding=1)
-        self.bn = nn.BatchNorm2d(out_channels)
+        self.bn3 = nn.BatchNorm2d(out_channels)
         self.relu = nn.ReLU(inplace=True)
 
     def forward(self, x):
-        out = self.relu(self.bn(self.conv1(x)))
-        out = self.relu(self.bn(self.conv2(out)))
-        out = self.relu(self.bn(self.conv3(out)))
+        out = self.relu(self.bn1(self.conv1(x)))
+        out = self.relu(self.bn2(self.conv2(out)))
+        out = self.relu(self.bn3(self.conv3(out)))
         return out
 
 
@@ -88,12 +91,12 @@ class DexiNedModel(BaseEdgeDetector):
 
         if checkpoint_path and Path(checkpoint_path).exists():
             # Load actual DexiNed (would need full implementation)
-            print("Loading actual DexiNed weights...")
+            logging.info("Loading actual DexiNed weights...")
             # For now, use simplified version
             self.model = DexiNedSimplified()
         else:
             # Use simplified version for demo
-            print("Using simplified DexiNed (demo mode)")
+            logging.info("Using simplified DexiNed (demo mode)")
             self.model = DexiNedSimplified()
 
         self.model.to(self.device)
@@ -134,47 +137,32 @@ class DexiNedModel(BaseEdgeDetector):
         edge_map = self._non_max_suppression(edge_map)
 
         # Scale and invert
-        edge_map = (edge_map * 255).astype(np.uint8)
-        edge_map = 255 - edge_map
-
+        edge_map = (1.0 - edge_map) * 255.0
+        edge_map = edge_map.astype(np.uint8)
         return edge_map
 
     def _non_max_suppression(
         self, edge_map: np.ndarray, threshold: float = 0.1
     ) -> np.ndarray:
         """Apply non-maximum suppression for thinner edges"""
-        # Simple NMS implementation
         h, w = edge_map.shape
         suppressed = np.zeros_like(edge_map)
 
-        # Compute gradients
+        # Compute gradients and angles
         dx = cv2.Sobel(edge_map, cv2.CV_64F, 1, 0, ksize=3)
         dy = cv2.Sobel(edge_map, cv2.CV_64F, 0, 1, ksize=3)
+        angle = np.rad2deg(np.arctan2(dy, dx)) % 180
 
-        # Gradient magnitude and direction
-        angle = np.arctan2(dy, dx)
+        # Direction indices 0-3
+        direction = ((angle + 22.5) // 45).astype(int) % 4
+        offsets = [((0, -1), (0, 1)), ((-1, -1), (1, 1)), ((-1, 0), (1, 0)), ((-1, 1), (1, -1))]
 
-        # Discretize angles to 8 directions
-        angle = np.rad2deg(angle) % 180
-
-        for i in range(1, h - 1):
-            for j in range(1, w - 1):
-                if edge_map[i, j] < threshold:
-                    continue
-
-                # Get neighbors based on gradient direction
-                a = angle[i, j]
-                if (0 <= a < 22.5) or (157.5 <= a <= 180):
-                    neighbors = [edge_map[i, j - 1], edge_map[i, j + 1]]
-                elif 22.5 <= a < 67.5:
-                    neighbors = [edge_map[i - 1, j - 1], edge_map[i + 1, j + 1]]
-                elif 67.5 <= a < 112.5:
-                    neighbors = [edge_map[i - 1, j], edge_map[i + 1, j]]
-                else:
-                    neighbors = [edge_map[i - 1, j + 1], edge_map[i + 1, j - 1]]
-
-                # Suppress if not maximum
-                if edge_map[i, j] >= max(neighbors):
-                    suppressed[i, j] = edge_map[i, j]
+        mask = edge_map >= threshold
+        for idx, ((y1, x1), (y2, x2)) in enumerate(offsets):
+            dir_mask = mask & (direction == idx)
+            before = np.roll(edge_map, shift=(y1, x1), axis=(0, 1))
+            after = np.roll(edge_map, shift=(y2, x2), axis=(0, 1))
+            local_max = (edge_map >= before) & (edge_map >= after)
+            suppressed = np.where(dir_mask & local_max, edge_map, suppressed)
 
         return suppressed

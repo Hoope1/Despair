@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: MIT
 from __future__ import annotations
 
+import logging
 import os
 import sys
 from pathlib import Path
@@ -33,13 +34,14 @@ try:
 except Exception as e:  # pragma: no cover - optional GUI support
     QApplication = None  # type: ignore
     EdgeDetectionApp = None  # type: ignore
-    print(f"ERROR: Failed to import PyQt6: {e}")
-    print("\nPlease ensure PyQt6 is properly installed:")
-    print("1. Run: setup_rye_windows.bat")
-    print("2. Or manually: rye run pip install --force-reinstall PyQt6==6.6.0")
+    logging.error("ERROR: Failed to import PyQt6: %s", e)
+    logging.error("Please ensure PyQt6 is properly installed:")
+    logging.error("1. Run: setup_rye_windows.bat")
+    logging.error("2. Or manually: rye run pip install --force-reinstall PyQt6==6.6.0")
 
 
 def main() -> None:
+    logging.basicConfig(level=logging.INFO, format="%(message)s")
     # Create necessary directories
     Path("checkpoints").mkdir(exist_ok=True)
     Path("output").mkdir(exist_ok=True)
@@ -51,15 +53,15 @@ def main() -> None:
         import torch
 
         if torch.cuda.is_available():
-            print(f"CUDA available: {torch.cuda.get_device_name(0)}")
-            print(f"CUDA version: {torch.version.cuda}")
+            logging.info("CUDA available: %s", torch.cuda.get_device_name(0))
+            logging.info("CUDA version: %s", torch.version.cuda)
         else:
-            print("WARNING: CUDA not available, using CPU (will be slower)")
+            logging.warning("CUDA not available, using CPU (will be slower)")
     except Exception as e:
-        print(f"WARNING: Could not check CUDA availability: {e}")
+        logging.warning("Could not check CUDA availability: %s", e)
 
     if QApplication is None or EdgeDetectionApp is None:
-        print("PyQt6 is not available. GUI cannot be started.")
+        logging.error("PyQt6 is not available. GUI cannot be started.")
         return
 
     # Start GUI application
