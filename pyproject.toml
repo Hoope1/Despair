@@ -1,0 +1,74 @@
+[project]
+name = "edge-detection-app"
+version = "1.0.0"
+description = "Modern Edge Detection App with TEED and DexiNed"
+authors = [
+    { name = "The Despair Authors", email = "contact@example.com" }
+]
+dependencies = [
+    "torch>=2.1.0",
+    "torchvision>=0.16.0",
+    "opencv-python>=4.8.1.78",
+    "numpy>=1.24.3,<2.0",
+    "Pillow>=10.1.0",
+    "matplotlib>=3.7.2",
+    "h5py>=3.10.0",
+    "scipy>=1.11.4",
+    "kornia>=0.7.0",
+    "tqdm>=4.66.1",
+    "PyQt6>=6.6.0",
+    "PyQt6-Qt6>=6.6.0",
+    "gdown>=4.7.1",
+    "requests>=2.31.0",
+]
+readme = "README.md"
+requires-python = ">= 3.10"
+license = { text = "MIT" }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.rye]
+managed = true
+dev-dependencies = [
+    "black>=24.3.0",
+    "isort>=5.13.2",
+    "flake8>=7.2.0",
+    "mypy>=1.10.0",
+    "bandit>=1.8.5",
+    "detect-secrets>=1.5.0",
+    "pre-commit>=3.5.0",
+    "pytest>=8.0.0",
+    "pytest-qt>=4.4.0",
+    "pytest-cov>=5.0.0",
+    "pip-audit>=2.7.0",
+    "reuse>=3.0.0",
+    "mkdocs>=1.5.0",
+    "codespell>=2.2.0",
+]
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["gui", "models", "processing", "scripts"]
+
+[tool.black]
+line-length = 100
+
+[tool.isort]
+profile = "black"
+line_length = 100
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+exclude = ["tests/.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+addopts = "-p no:pytestqt"
+
+[tool.flake8]
+max-line-length = 100
