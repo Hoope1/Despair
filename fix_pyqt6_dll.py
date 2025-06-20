@@ -3,27 +3,31 @@
 Fix PyQt6 DLL issues on Windows
 """
 
+from __future__ import annotations
+
 import os
-import sys
-import subprocess
 import platform
+import subprocess
+import sys
 from pathlib import Path
 
 
-def fix_pyqt6_windows():
-    """Fix PyQt6 DLL loading issues on Windows"""
+def fix_pyqt6_windows() -> bool:
+    """Fix PyQt6 DLL loading issues on Windows."""
 
     if platform.system() != "Windows":
         print("This script is only needed on Windows.")
-        return
+        return False
 
     print("Fixing PyQt6 DLL issues on Windows...")
     print("=" * 60)
 
     # 1. Uninstall existing PyQt6
     print("\n1. Uninstalling existing PyQt6 packages...")
-    subprocess.run([sys.executable, "-m", "pip", "uninstall", "-y", 
-                   "PyQt6", "PyQt6-Qt6", "PyQt6-sip"], capture_output=True)
+    subprocess.run(
+        [sys.executable, "-m", "pip", "uninstall", "-y", "PyQt6", "PyQt6-Qt6", "PyQt6-sip"],
+        capture_output=True,
+    )
 
     # 2. Clear pip cache
     print("\n2. Clearing pip cache...")
@@ -36,17 +40,23 @@ def fix_pyqt6_windows():
 
     # 4. Reinstall PyQt6 with specific versions
     print("\n4. Installing PyQt6 with specific versions...")
-    packages = [
-        "PyQt6-sip==13.6.0",
-        "PyQt6-Qt6==6.6.0", 
-        "PyQt6==6.6.0"
-    ]
+    packages = ["PyQt6-sip==13.6.0", "PyQt6-Qt6==6.6.0", "PyQt6==6.6.0"]
 
     for package in packages:
         print(f"   Installing {package}...")
-        result = subprocess.run([sys.executable, "-m", "pip", "install", 
-                               "--force-reinstall", "--no-cache-dir", package],
-                              capture_output=True, text=True)
+        result = subprocess.run(
+            [
+                sys.executable,
+                "-m",
+                "pip",
+                "install",
+                "--force-reinstall",
+                "--no-cache-dir",
+                package,
+            ],
+            capture_output=True,
+            text=True,
+        )
         if result.returncode != 0:
             print(f"   ERROR: Failed to install {package}")
             print(f"   {result.stderr}")
@@ -56,12 +66,12 @@ def fix_pyqt6_windows():
     # 5. Test PyQt6 import
     print("\n5. Testing PyQt6 import...")
     try:
-        import PyQt6.QtCore
-        import PyQt6.QtWidgets
+        from PyQt6.QtCore import PYQT_VERSION_STR, QT_VERSION_STR
+
         print("   ✓ PyQt6 imported successfully!")
 
         # Get Qt version
-        from PyQt6.QtCore import QT_VERSION_STR, PYQT_VERSION_STR
+
         print(f"   Qt version: {QT_VERSION_STR}")
         print(f"   PyQt version: {PYQT_VERSION_STR}")
 
@@ -79,8 +89,8 @@ def fix_pyqt6_windows():
     return True
 
 
-def setup_environment_vars():
-    """Setup environment variables for PyQt6"""
+def setup_environment_vars() -> None:
+    """Setup environment variables for PyQt6."""
     print("\n6. Setting up environment variables...")
 
     # Find PyQt6 installation
@@ -92,15 +102,16 @@ def setup_environment_vars():
         qt_bin_path = pyqt6_path / "Qt6" / "bin"
 
         if qt_plugin_path.exists():
-            os.environ['QT_PLUGIN_PATH'] = str(qt_plugin_path)
+            os.environ["QT_PLUGIN_PATH"] = str(qt_plugin_path)
             print(f"   Set QT_PLUGIN_PATH: {qt_plugin_path}")
 
         if qt_bin_path.exists():
-            os.environ['PATH'] = str(qt_bin_path) + os.pathsep + os.environ.get('PATH', '')
+            os.environ["PATH"] = str(qt_bin_path) + os.pathsep + os.environ.get("PATH", "")
             print(f"   Added to PATH: {qt_bin_path}")
 
 
-def main():
+def main() -> None:
+    """Entry point for fixing PyQt6 DLL issues."""
     print("PyQt6 DLL Fix Script")
     print("=" * 60)
 
