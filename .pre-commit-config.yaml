@@ -5,12 +5,13 @@ repos:
     rev: 24.3.0
     hooks:
       - id: black
+        args: ["--check"]
         language_version: python3
   - repo: https://github.com/PyCQA/isort
     rev: 5.13.2
     hooks:
       - id: isort
-        args: ["--profile=black"]
+        args: ["--profile=black", "--check-only"]
   - repo: https://github.com/PyCQA/flake8
     rev: 7.2.0
     hooks:
@@ -29,3 +30,12 @@ repos:
     rev: v1.5.0
     hooks:
       - id: detect-secrets
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.2.6
+    hooks:
+      - id: codespell
+        args: ["--ignore-words-list=nd,teh", "--skip=AGENTS.md,.git,venv"]
+  - repo: https://github.com/fsfe/reuse-tool
+    rev: v3.0.1
+    hooks:
+      - id: reuse

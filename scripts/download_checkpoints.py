@@ -1,3 +1,5 @@
+# SPDX-FileCopyrightText: 2025 The Despair Authors
+# SPDX-License-Identifier: MIT
 """Utility to download all model checkpoints."""
 
 # mypy: ignore-errors
