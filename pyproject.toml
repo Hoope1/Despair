@@ -18,8 +18,8 @@ dependencies = [
     "scipy>=1.11.4",
     "kornia>=0.7.0",
     "tqdm>=4.66.1",
-    "PyQt6>=6.6.0",
-    "PyQt6-Qt6>=6.6.0",
+    "PyQt6==6.9.1",
+    "PyQt6-Qt6==6.9.1",
     "gdown>=4.7.1",
     "requests>=2.31.0",
 ]

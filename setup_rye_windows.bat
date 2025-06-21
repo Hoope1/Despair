@@ -51,7 +51,7 @@ REM Fix PyQt6 DLL issues on Windows
 echo.
 echo Fixing PyQt6 installation...
 rye run pip uninstall -y PyQt6 PyQt6-Qt6 PyQt6-sip
-rye run pip install --force-reinstall --no-cache-dir PyQt6==6.6.0 PyQt6-Qt6==6.6.0 PyQt6-sip==13.6.0
+rye run pip install --force-reinstall --no-cache-dir PyQt6==6.9.1 PyQt6-Qt6==6.9.1 PyQt6_sip==13.10.2
 
 REM Install PyTorch with CUDA support
 echo.
