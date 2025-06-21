@@ -37,7 +37,9 @@ except Exception as e:  # pragma: no cover - optional GUI support
     logging.error("ERROR: Failed to import PyQt6: %s", e)
     logging.error("Please ensure PyQt6 is properly installed:")
     logging.error("1. Run: setup_rye_windows.bat")
-    logging.error("2. Or manually: rye run pip install --force-reinstall PyQt6==6.6.0")
+    logging.error(
+        "2. Or manually: rye run pip install --force-reinstall PyQt6==6.9.1 PyQt6-Qt6==6.9.1 PyQt6_sip==13.10.2"
+    )
 
 
 def main() -> None:

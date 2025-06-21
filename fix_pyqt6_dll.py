@@ -42,7 +42,7 @@ def fix_pyqt6_windows() -> bool:
 
     # 4. Reinstall PyQt6 with specific versions
     print("\n4. Installing PyQt6 with specific versions...")
-    packages = ["PyQt6-sip==13.6.0", "PyQt6-Qt6==6.6.0", "PyQt6==6.6.0"]
+    packages = ["PyQt6_sip==13.10.2", "PyQt6-Qt6==6.9.1", "PyQt6==6.9.1"]
 
     for package in packages:
         print(f"   Installing {package}...")

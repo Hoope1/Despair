@@ -147,7 +147,7 @@ Always update this **Agents.md** when you introduce new directories, tools, or 
 | PyTorch     | 2.1.0   |
 | torchvision | 0.16.0  |
 | OpenCV      | 4.8.1   |
-| PyQt6       | 6.6.0   |
+| PyQt6       | 6.9.1   |
 | numpy       | 1.24.3  |
 | black       | 24.\*   |
 | mypy        | 1.\*    |
@@ -316,7 +316,9 @@ kornia==0.7.0
 tqdm==4.66.1
 
 # GUI
-PyQt6==6.6.0
+PyQt6==6.9.1
+PyQt6-Qt6==6.9.1
+PyQt6_sip==13.10.2
 
 # Utils
 gdown==4.7.1
